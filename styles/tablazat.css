@@ -1,0 +1,22 @@
+table {
+    margin: 0 auto;
+    font-size: large;
+    border: 1px solid black;
+}
+
+td {
+    background-color: #e7e7e7;
+    border: 1px solid black;
+}
+
+th,
+td {
+    font-weight: bold;
+    border: 1px solid black;
+    padding: auto;
+    text-align: center;
+}
+
+td {
+    font-weight: lighter;
+}
