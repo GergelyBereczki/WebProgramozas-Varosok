@@ -1,18 +1,12 @@
 <?php
-include('./includes/config.inc.php');
 
-// oldalak keresÃ©s php , ha nem talÃ¡l hiba
+//alkalmazás gyökér könyvtára a szerveren
+define('SERVER_ROOT', $_SERVER['DOCUMENT_ROOT'].'/web2/');
 
-$keres = $oldalak['/'];
-if (isset($_GET['oldal'])) {
-	if (isset($oldalak[$_GET['oldal']]) && file_exists("./templates/pages/{$oldalak[$_GET['oldal']]['fajl']}.tpl.php")) {
-		$keres = $oldalak[$_GET['oldal']];
-	}
-	else { 
-		$keres = $hiba_oldal;
-		header("HTTP/1.0 404 Not Found");
-	}
-}
+//URL cím az alkalmazás gyökeréhez
+define('SITE_ROOT', 'http://localhost/web2/');
 
-include('./templates/index.tpl.php'); 
+// a router.php vezérlõ betöltése
+require_once(SERVER_ROOT . 'controllers/' . 'router.php');
+
 ?>
