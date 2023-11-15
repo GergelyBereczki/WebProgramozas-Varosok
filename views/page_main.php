@@ -15,7 +15,7 @@
             <?php echo Menu::getMenu($viewData['selectedItems']); ?>
         </nav>
         <aside>
-                <p>Ez a holnap azért jött létre, hogy bemutassa magyarország városait!</p>
+                <p>Ez a holnap azért jött létre, hogy bemutassa Magyarország városait!</p>
         </aside>
         <section>
             <?php if($viewData['render']) include($viewData['render']); ?>
