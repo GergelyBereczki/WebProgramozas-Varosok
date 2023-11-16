@@ -9,8 +9,8 @@ if(! isset($_SESSION['userlevel'])) $_SESSION['userlevel'] = "1__";
 include(SERVER_ROOT . 'includes/database.inc.php');
 include(SERVER_ROOT . 'includes/menu.inc.php');
 
-// Felbontjuk a paramétereket. Az & elválasztó jellel végzett felbontás
-// megfelelõ lesz, elsõ eleme a megtekinteni kívánt oldal neve.
+// Felbontjuk a paramÃ©tereket. Az & elvÃ¡lasztÃ³ jellel vÃ©gzett felbontÃ¡s
+// megfelelÃµ lesz, elsÃµ eleme a megtekinteni kÃ­vÃ¡nt oldal neve.
 
 $page = "nyitolap";
 $subpage = "";
@@ -21,28 +21,28 @@ $request = $_SERVER['QUERY_STRING'];
 if($request != "")
 {
 	$params = explode('/', $request);
-	$page = array_shift($params); // a kért oldal neve
+	$page = array_shift($params); // a kÃ©rt oldal neve
 	
-	if(array_key_exists($page, Menu::$menu) && count($params)>0) // Az oldal egy menüpont oldala és van még adat az url-ben
+	if(array_key_exists($page, Menu::$menu) && count($params)>0) // Az oldal egy menÃ¼pont oldala Ã©s van mÃ©g adat az url-ben
 	{
-		$subpage = array_shift($params); // a kért aloldal
+		$subpage = array_shift($params); // a kÃ©rt aloldal
 		if(! (array_key_exists($subpage, Menu::$menu) && Menu::$menu[$subpage][1] == $page)) // ha nem egy alolal
 		{
 			$vars[] = $subpage; // akkor ez egy parameter
-			$subpage = ""; // és nincs aloldal
+			$subpage = ""; // Ã©s nincs aloldal
 		}
 	}
 	$vars += $_POST;
 	
-	foreach($params as $p) // a paraméterek tömbje feltöltése
+	foreach($params as $p) // a paramÃ©terek tÃ¶mbje feltÃ¶ltÃ©se
 	{
 		$vars[] = $p;
 	}
 }
 
-// Meghatározzuk a kért oldalhoz tartozó vezérlõt. Ha megtaláltuk
-// a fájlt és a hozzá tartozó vezérlõ oldalt is, akkor betöltjük az
-// elõbbiekben lekérdezett paramétereket továbbadva. 
+// MeghatÃ¡rozzuk a kÃ©rt oldalhoz tartozÃ³ vezÃ©rlÃµt. Ha megtalÃ¡ltuk
+// a fÃ¡jlt Ã©s a hozzÃ¡ tartozÃ³ vezÃ©rlÃµ oldalt is, akkor betÃ¶ltjÃ¼k az
+// elÃµbbiekben lekÃ©rdezett paramÃ©tereket tovÃ¡bbadva. 
 
 $controllerfile = $page.($subpage != "" ? "_".$subpage : "");
 $target = SERVER_ROOT.'controllers/'.$controllerfile.'.php';
@@ -59,14 +59,14 @@ if(class_exists($class))
 else
 	{ die('class does not exists!'); }
 
-// spl_autoload_register(...) függvény, amely ismeretlen osztály hívásakor, megpróbálja automatikusan betölteni a megfelelõ fájlt. 
-// A modellekhez használjuk, egységesen nevezzük el fájljainkat (osztály nevével megegyezõ, csupa kisbetûs .php)
+// spl_autoload_register(...) fÃ¼ggvÃ©ny, amely ismeretlen osztÃ¡ly hÃ­vÃ¡sakor, megprÃ³bÃ¡lja automatikusan betÃ¶lteni a megfelelÃµ fÃ¡jlt. 
+// A modellekhez hasznÃ¡ljuk, egysÃ©gesen nevezzÃ¼k el fÃ¡jljainkat (osztÃ¡ly nevÃ©vel megegyezÃµ, csupa kisbetÃ»s .php)
 spl_autoload_register(function($className) {
     $file = SERVER_ROOT.'models/'.strtolower($className).'.php';
     if(file_exists($file))
     { include_once($file); }
     else
-    { die("File '$filename' containing class '$className' not found.");    }
+    { die("File '$file' containing class '$className' not found.");    }
 });
 
 $controller->main($vars);
