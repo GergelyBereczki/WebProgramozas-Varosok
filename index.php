@@ -1,18 +1,12 @@
 <?php
-include('./includes/config.inc.php');
 
-// oldalak keresés php , ha nem talál hiba
+//alkalmaz�s gy�k�r k�nyvt�ra a szerveren
+define('SERVER_ROOT', $_SERVER['DOCUMENT_ROOT'].'/web2/');
 
-$keres = $oldalak['/'];
-if (isset($_GET['oldal'])) {
-	if (isset($oldalak[$_GET['oldal']]) && file_exists("./templates/pages/{$oldalak[$_GET['oldal']]['fajl']}.tpl.php")) {
-		$keres = $oldalak[$_GET['oldal']];
-	}
-	else { 
-		$keres = $hiba_oldal;
-		header("HTTP/1.0 404 Not Found");
-	}
-}
+//URL c�m az alkalmaz�s gy�ker�hez
+define('SITE_ROOT', 'http://localhost/web2/');
 
-include('./templates/index.tpl.php'); 
+// a router.php vez�rl� bet�lt�se
+require_once(SERVER_ROOT . 'controllers/' . 'router.php');
+
 ?>
