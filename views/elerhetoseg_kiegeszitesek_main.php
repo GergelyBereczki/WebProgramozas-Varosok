@@ -2,8 +2,8 @@
 <html>
   <head>
   <meta charset="utf-8">
-  <script type="text/javascript" src = "jquery.min.js"></script>
-  <script type="text/javascript" src = "../includes/varosok.js"></script>
+  <script type="text/javascript" src = "../includes/jquery.min.js"></script>
+  <script type="text/javascript" src = "../includes/kiolvas.js"></script>
   <title>Városok</title>
   <style>
     #informaciosdiv {
@@ -48,8 +48,8 @@
       <label for = 'vkcimke'>Város:</label>
       <select id = 'vkselect'></select>
       <br><br>
-      <label for = 'lszcimke'>Lélekszám:</label>
-      <select id = 'lszselect'></select>
+      <label for = 'evcimke'>Évszám:</label>
+      <select id = 'evselect'></select>
     </div>
   </body>
-</html>
+  </html>
