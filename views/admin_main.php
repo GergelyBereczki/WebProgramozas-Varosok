@@ -1,7 +1,7 @@
 
 
 <?php
-$url = "http://localhost/web2/includes/szerver.php";
+$url = "http://localhost/web2/szerver.php";
 $result = "";
 if(isset($_POST['id']))
 {

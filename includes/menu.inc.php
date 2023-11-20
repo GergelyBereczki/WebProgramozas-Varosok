@@ -23,6 +23,7 @@ Class Menu {
             else if($menuitem[1] == $sItems[0])
             { $submenu .= "<li><a href='".SITE_ROOT.$sItems[0]."/".$menuindex."' ".($menuindex==$sItems[1]? "class='selected'":"").">".$menuitem[0]."</a></li>"; }
         }
+        
         $menu.="</ul>";
         
         if($submenu != "")

@@ -1,0 +1,77 @@
+<?php
+
+class Pdfquery_model {
+	protected bool $megyeMindegy;
+	protected bool $megyeJogu;
+	protected string $sqlSelect;
+	protected array $queryConstraints;
+
+	public function __construct($vars) {
+		$this->megyeMindegy = $vars['megye_jog'] == 'mindegy';
+		if ($this->megyeMindegy) {
+			$this->sqlSelect =
+				"SELECT megye.nev as megye, varos.nev as varos, lelekszam.ev as mikor, lelekszam.osszesen as lelekszam, varos.megyeijogu as megyejog
+FROM megye 
+INNER JOIN varos on megye.id = varos.megyeid 
+INNER JOIN lelekszam on varos.id = lelekszam.varosid
+WHERE lelekszam.osszesen >= :minlel and lelekszam.osszesen <= :maxlel 
+  and lelekszam.ev >= :minev and lelekszam.ev <= :maxev";
+			$this->queryConstraints = array(
+				':minlel' => $vars['min_lel'],
+				':maxlel' => $vars['max_lel'],
+				':minev' => $vars['min_ev'],
+				':maxev' => $vars['max_ev']
+			);
+		} else {
+			$this->sqlSelect =
+				"SELECT megye.nev as megye, varos.nev as varos, lelekszam.ev as mikor, lelekszam.osszesen as lelekszam, varos.megyeijogu as megyejog
+FROM megye  
+INNER JOIN varos on megye.id = varos.megyeid  
+INNER JOIN lelekszam on varos.id = lelekszam.varosid
+WHERE lelekszam.osszesen >= :minlel and lelekszam.osszesen <= :maxlel 
+and lelekszam.ev >= :minev and lelekszam.ev <= :maxev
+and varos.megyeijogu = :megyeJog";
+			$this->megyeJogu = $vars['megye_jog'] == "megye_jogu";
+			$this->queryConstraints = array(
+				':minlel' => $vars['min_lel'],
+				':maxlel' => $vars['max_lel'],
+				':minev' => $vars['min_ev'],
+				':maxev' => $vars['max_ev'],
+				':megyeJog' => $this->megyeJogu
+			);
+		}
+	}
+
+
+
+	public function get_data($vars): array {
+		$retData['eredmeny'] = "";
+		$hikingList = array();
+		try {
+			$connection = Database::getConnection();
+			$stmt = $connection->prepare($this->sqlSelect);
+			$stmt->execute($this->queryConstraints);
+			$itemCount = $stmt->rowCount();
+			if ($itemCount == 0) {
+				$retData['eredmeny'] = "ERROR";
+				$retData['uzenet'] = "Nincsen találat!";
+			} else {
+				foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $Item) {
+					$hikingList[] = [
+						'megye' => $Item['megye'],
+						'varos' => $Item['varos'],
+						'mikor' => $Item['mikor'],
+						'lelekszam' => $Item['lelekszam'],
+						'megyejog' => $Item['megyejog'],						
+					];
+				}
+				$retData['eredmeny'] = "OK";
+				$retData['varosok'] = $hikingList;
+			}
+		} catch (PDOException $e) {
+			$retData['eredmeny'] = "ERROR";
+			$retData['uzenet'] = "Adatbázis hiba: " . $e->getMessage() . "!";
+		}
+		return $retData;
+	}
+}
