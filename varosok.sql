@@ -83,7 +83,9 @@ INSERT INTO `menu` (`url`, `nev`, `szulo`, `jogosultsag`, `sorrend`) VALUES
 ('kiegeszitesek', 'Kiegészítések', 'elerhetoseg', '011', 50),
 ('kilepes', 'Kilépés', '', '011', 70),
 ('linkek', 'Linkek', '', '100', 30),
-('nyitolap', 'Nyitólap', '', '111', 10);
+('nyitolap', 'Nyitólap', '', '111', 10),
+('pdfmaker', 'TCPDF', '', '111', 90),
+('grafikon', 'Grafikon', '', '111', 100);
 
 -- --------------------------------------------------------
 
