@@ -1,10 +1,10 @@
 <?php
 
 class Pdfquery_model {
-	protected bool $megyeMindegy;
-	protected bool $megyeJogu;
-	protected string $sqlSelect;
-	protected array $queryConstraints;
+	protected $megyeMindegy;
+	protected $megyeJogu;
+	protected $sqlSelect;
+	protected $queryConstraints;
 
 	public function __construct($vars) {
 		$this->megyeMindegy = $vars['megye_jog'] == 'mindegy';
@@ -37,16 +37,16 @@ and varos.megyeijogu = :megyeJog";
 				':maxlel' => $vars['max_lel'],
 				':minev' => $vars['min_ev'],
 				':maxev' => $vars['max_ev'],
-				':megyeJog' => $this->megyeJogu
+				':megyeJog' => ($this->megyeJogu) ? -1 : 0,
 			);
 		}
 	}
 
 
 
-	public function get_data($vars): array {
+	public function get_data($vars) {
 		$retData['eredmeny'] = "";
-		$hikingList = array();
+		$varosList = array();
 		try {
 			$connection = Database::getConnection();
 			$stmt = $connection->prepare($this->sqlSelect);
@@ -57,16 +57,19 @@ and varos.megyeijogu = :megyeJog";
 				$retData['uzenet'] = "Nincsen találat!";
 			} else {
 				foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $Item) {
-					$hikingList[] = [
+					// Megvizsgáljuk a megyeijogu értéket a varos táblában
+					$megyejogValue = ($Item['megyejog'] == -1 || $Item['megyejog'] == 1) ? true : false;
+	
+					$varosList[] = [
 						'megye' => $Item['megye'],
 						'varos' => $Item['varos'],
 						'mikor' => $Item['mikor'],
 						'lelekszam' => $Item['lelekszam'],
-						'megyejog' => $Item['megyejog'],						
+						'megyejog' => $megyejogValue,
 					];
 				}
 				$retData['eredmeny'] = "OK";
-				$retData['varosok'] = $hikingList;
+				$retData['varosok'] = $varosList;
 			}
 		} catch (PDOException $e) {
 			$retData['eredmeny'] = "ERROR";
