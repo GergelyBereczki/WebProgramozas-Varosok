@@ -57,15 +57,14 @@ and varos.megyeijogu = :megyeJog";
 				$retData['uzenet'] = "Nincsen találat!";
 			} else {
 				foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $Item) {
-					// Megvizsgáljuk a megyeijogu értéket a varos táblában
-					$megyejogValue = ($Item['megyejog'] == -1 || $Item['megyejog'] == 1) ? true : false;
-	
+					$megyejogValue = ($Item['megyejog'] == -1) ? true : false;
+
 					$varosList[] = [
 						'megye' => $Item['megye'],
 						'varos' => $Item['varos'],
 						'mikor' => $Item['mikor'],
 						'lelekszam' => $Item['lelekszam'],
-						'megyejog' => $megyejogValue,
+						'megyejog' => $megyejogValue,						
 					];
 				}
 				$retData['eredmeny'] = "OK";

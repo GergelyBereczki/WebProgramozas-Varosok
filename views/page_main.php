@@ -18,9 +18,15 @@
 
 </head>
 
-<body style=" overflow: auto; background-image: url('<?php echo SITE_ROOT ?>/images/bg.jpg');">
+<body>
 
-
+<style>
+  body {
+    margin: 0; /* Eltávolítjuk a test margóját, hogy ne legyen üres tér */
+    background: url('<?php echo SITE_ROOT ?>/images/bg.jpg') no-repeat center center fixed;
+    background-size: cover; /* A kép mérete fedje le a teljes háttérteret */
+  }
+</style>
 
 </header>
 <div>
@@ -43,7 +49,7 @@
     <br><br><br>
 
     <!--Footer megjelenítése.-->
-    <div class="jumbotron text-center" style="margin-bottom:0; margin-top:0;  ">
+    <div style="margin-bottom:0; margin-top:0;  ">
         <footer id="lab">
             &copy; Bagó Bence, Bereczki Gergely <?= date("Y") ?>
         </footer>
