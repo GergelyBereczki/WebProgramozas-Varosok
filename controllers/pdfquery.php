@@ -7,7 +7,7 @@ require_once(SERVER_ROOT . 'tcpdf/tcpdf.php');
 
 
 class Pdfquery_controller {
-	public string $baseName = 'pdfmaker';
+	public $baseName = 'pdfmaker';
 
 	public function main(array $vars) {
 		$pdfQueryModel = new Pdfquery_model($vars);
@@ -41,8 +41,8 @@ class Pdfquery_controller {
 			if (@file_exists(dirname(__FILE__) . '/lang/hun.php')) {
 				require_once(dirname(__FILE__) . '/lang/hun.php');
 				$pdf->setLanguageArray($l);
-			} else if (@file_exists('./web2/tcpdf/examples/lang/hun.php')) {
-				require_once('./web2/tcpdf/examples/lang/hun.php');
+			} else if (@file_exists('.tcpdf/examples/lang/hun.php')) {
+				require_once('.tcpdf/examples/lang/hun.php');
 				$pdf->setLanguageArray($l);
 			} else {
 				$l['a_meta_charset'] = 'UTF-8';

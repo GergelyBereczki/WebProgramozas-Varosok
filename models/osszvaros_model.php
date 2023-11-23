@@ -1,10 +1,10 @@
 <?php
 
 class Osszvaros_Model {
-	public function get_data($vars): array {
+	public function get_data($vars) {
 		$retData['eredmeny'] = array();
 		try {
-			$dbh = new PDO('mysql:host=' . HOST . ';dbname=' . DATABASE, USER, PASSWORD,
+			$dbh = new PDO('mysql:host=localhost;dbname=varosok', 'root', '',
 						   array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 			$dbh->query('SET NAMES utf8 COLLATE utf8_hungarian_ci');
 			$stmt = $dbh->prepare(

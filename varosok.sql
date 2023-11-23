@@ -24,6 +24,8 @@ SET time_zone = "+00:00";
 CREATE DATABASE IF NOT EXISTS `varosok` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_hungarian_ci;
 USE `varosok`;
 
+
+
 -- --------------------------------------------------------
 
 --
@@ -77,12 +79,11 @@ CREATE TABLE IF NOT EXISTS `menu` (
 
 INSERT INTO `menu` (`url`, `nev`, `szulo`, `jogosultsag`, `sorrend`) VALUES
 ('admin', 'Admin', '', '001', 80),
-('alapinfok', 'Alapinfók', 'elerhetoseg', '111', 40),
+('alapinfok', 'API teszt', 'elerhetoseg', '111', 40),
 ('belepes', 'Belépés', '', '100', 60),
-('elerhetoseg', 'Elérhetőség', '', '111', 20),
-('kiegeszitesek', 'Kiegészítések', 'elerhetoseg', '011', 50),
+('elerhetoseg', 'Rest API', '', '111', 20),
+('kiegeszitesek', 'Város adatai', 'elerhetoseg', '011', 50),
 ('kilepes', 'Kilépés', '', '011', 70),
-('linkek', 'Linkek', '', '100', 30),
 ('nyitolap', 'Nyitólap', '', '111', 10),
 ('pdfmaker', 'TCPDF', '', '111', 90),
 ('grafikon', 'Grafikon', '', '111', 100);
@@ -94,10 +95,9 @@ INSERT INTO `menu` (`url`, `nev`, `szulo`, `jogosultsag`, `sorrend`) VALUES
 --
 
 CREATE TABLE `megye` (
-  `id` int(2) DEFAULT NULL,
-  `nev` varchar(22) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
+  `id` int(2) NOT NULL PRIMARY KEY,
+  `nev` varchar(22) DEFAULT NULL)
+ ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- A tábla adatainak kiíratása `megye`
@@ -132,15 +132,13 @@ INSERT INTO `megye` (`id`, `nev`) VALUES
 --
 
 CREATE TABLE `varos` (
-  `id` int(3) DEFAULT NULL,
-  `nev` varchar(17) DEFAULT NULL,
+  `id` int(3) NOT NULL PRIMARY KEY,
+  `nev` varchar(17) NOT NULL UNIQUE KEY,
   `megyeid` int(2) DEFAULT NULL,
   `megyeszekhely` int(2) DEFAULT NULL,
   `megyeijogu` int(2) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY (`nev`),
-  FOREIGN KEY (`megyeid`) REFERENCES `megye`(`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
+  FOREIGN KEY (`megyeid`) REFERENCES `megye`(`id`))
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
 
 --
 -- A tábla adatainak kiíratása `varos`
@@ -524,13 +522,13 @@ INSERT INTO `varos` (`id`, `nev`, `megyeid`, `megyeszekhely`, `megyeijogu`) VALU
 --
 
 CREATE TABLE `lelekszam` (
-  `varosid` int(3) DEFAULT NULL,
-  `ev` int(4) DEFAULT NULL,
+  `varosid` int(3) NOT NULL,
+  `ev` int(4) NOT NULL,
   `no` int(6) DEFAULT NULL,
   `osszesen` int(6) DEFAULT NULL,
   PRIMARY KEY (`varosid`, `ev`),
-  FOREIGN KEY (`varosid`) REFERENCES `varos`(`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
+  FOREIGN KEY (`varosid`) REFERENCES `varos`(`id`))
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
 
 --
 -- A tábla adatainak kiíratása `lelekszam`

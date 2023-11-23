@@ -1,5 +1,5 @@
 <h2>
-    <br>A következő címen és telefonon érhet el:<br>
-    <br>Cím: Kecskemét, Izsáki út 10, 6000<br>
-    <br>Telefon: 0676516300<br>
+    A teszteket két menüpontban - API teszt és Város adatai -  tudja kipróbálni.
+    <br> <br>
+    Jelentkezzen be, hogy a weboldal összes funkiójához hozzáférjen.
 </h2>

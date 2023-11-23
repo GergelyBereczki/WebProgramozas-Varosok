@@ -8,7 +8,7 @@ class MyPdf extends TCPDF {
 	public function LoadTestData($database, $table) {
 		$rows = array();
 		try {
-			$dbh = new PDO('mysql:host=localhost;dbname=' . $database, 'root', '',
+			$dbh = new PDO('mysql:host=localhost;dbname=varosok', 'root', '',
 						   array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 			$dbh->query('SET NAMES utf8 COLLATE utf8_hungarian_ci');
 
@@ -61,10 +61,12 @@ class MyPdf extends TCPDF {
 			$this->MultiCell($w[1], 14, $r['varos'], 'LRB', 'L', 1, 0, '', '', true, 0, false, true, 0, 'T', true);
 			$this->Cell($w[2], 14, $r['mikor'], 'LRB', 0, 'L', 1, '', 0, false, 'T', 'T');
 			$this->MultiCell($w[3], 14, $r['lelekszam'], 'LRB', 'L', 1, 0, '', '', true, 0, false, true, 0, 'T', true);
-			$this->MultiCell($w[4], 14, 
-   			($r['megyejog'] == -1) ? "igen" : "nem", 
-   			 1, 'L', 1
+            $this->MultiCell($w[4], 14, 
+    		($r['megyejog'] == true) ? "nem" : "igen", 
+    		1, 'L', 1
 			);
+
+
 
 			$this->Ln();
 			$i = !$i;
