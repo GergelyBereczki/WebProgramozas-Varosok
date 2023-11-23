@@ -13,7 +13,7 @@
         </div>
         <div class="col-sm-12 col-md-6 col-lg-4">
             <fieldset class="framed-fieldset">
-                 <legend>Évszám - 2001-2019</legend>
+                <legend>Évszám - 2001-2019</legend>
                 <label for="min_ev" class="form-label">Legalább:</label>
                 <input type="number" id="min_ev" name="min_ev" min="2001" max="2019"/>
                 <br>
